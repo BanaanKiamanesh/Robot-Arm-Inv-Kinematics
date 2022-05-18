@@ -1,13 +1,42 @@
+import geomerative.*;
+
+RFont f;
+RShape grp;
+RExtrudedMesh em;
+
 Arm arm;
 
 void setup() {
   fullScreen(P3D);
+
+  // Enable smoothing
   smooth(8);
+
+  RG.init(this);
+
+  // RG Specs
+  grp = RG.getText("Banaan Kiamanesh", "FreeSansBoldOblique.ttf", 30, CENTER);
+  RG.setPolygonizer(RG.UNIFORMLENGTH);
+  RG.setPolygonizerLength(1);
+
+  em = new RExtrudedMesh(grp, 20);
+
   arm = new Arm();
 }
 
 void draw() {
   background(50);
+
+  pushMatrix();
+  lights();
+  translate(width/2, height * 0.25, 200);
+  rotateY(millis()/2000.0);
+
+  fill(255, 100, 0);
+  noStroke();
+  em.draw();
+  popMatrix();
+  //translate(-width/2, -height/2, -200);
   arm.update();
 }
 
