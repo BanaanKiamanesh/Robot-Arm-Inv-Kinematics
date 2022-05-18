@@ -29,6 +29,9 @@ class Arm {
   float[] Ysphere = new float[150];
   float[] Zsphere = new float[150];
 
+  // Time Passed between rendered Frames
+  double dt = 0; 
+
   //////////////////////////////////////////////////////////////////// Constructor
   Arm() {
     // Import 3D Objects
@@ -59,7 +62,7 @@ class Arm {
     directionalLight(51, 102, 126, -1, 0, 0);
 
     noStroke();
-    translate(width/2, height/2);
+    translate(width * 0.68, height/2);
     rotateX(this.rotX);
     rotateY(-this.rotY);
     scale(-4);
@@ -73,6 +76,8 @@ class Arm {
       this.paramX = map(mouseX, 0, width, 5, 120);
       this.paramZ = map(mouseY, 0, height, 5, 120);
     }
+
+    this.dt = 1 / frameRate;
   }
 
   //////////////////////////////////////////////////////////////////// Generate a Random Pos for the End Effector 
@@ -134,9 +139,9 @@ class Arm {
         this.genRandomPos();
 
     // Path Smoothing for the End Effector Movement
-    this.posX += (this.tmpX - this.posX) * 1 / frameRate;
-    this.posY += (this.tmpY - this.posY) * 1 / frameRate;
-    this.posZ += (this.tmpZ - this.posZ) * 1 / frameRate;
+    this.posX += (this.tmpX - this.posX) * this.dt;
+    this.posY += (this.tmpY - this.posY) * this.dt;
+    this.posZ += (this.tmpZ - this.posZ) * this.dt;
   }
 
   //////////////////////////////////////////////////////////////////// Set Update Maneuvre Mode
@@ -146,8 +151,8 @@ class Arm {
 
   //////////////////////////////////////////////////////////////////// Update Canvas View Angle
   void updateRot() {
-    this.rotY -= (mouseX - pmouseX) * 0.01;
-    this.rotX -= (mouseY - pmouseY) * 0.01;
+    this.rotY -= (mouseX - pmouseX) * this.dt;
+    this.rotX -= (mouseY - pmouseY) * this.dt;
   }
 
   //////////////////////////////////////////////////////////////////// Translate the Linkd to the Given Angles

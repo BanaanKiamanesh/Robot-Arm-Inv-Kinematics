@@ -6,7 +6,6 @@ void setup() {
   arm = new Arm();
 }
 
-
 void draw() {
   background(50);
   arm.update();
