@@ -25,9 +25,9 @@ class Arm {
   String mode = "Rand";
 
   // Shape Path Effects Spheres
-  float[] Xsphere = new float[100];
-  float[] Ysphere = new float[100];
-  float[] Zsphere = new float[100];
+  float[] Xsphere = new float[50];
+  float[] Ysphere = new float[50];
+  float[] Zsphere = new float[50];
 
   // Time Passed between rendered Frames
   double dt = 0; 
@@ -205,7 +205,7 @@ class Arm {
     this.Zsphere[this.Zsphere.length - 1] = this.posZ;
 
     // Add the New Point into the Plot
-    this.plt.drawPoints(posX, posY, posZ);
+    this.plt.drawPoints(posX, posY - 11, posZ);
 
     for (int i = 0; i < this.Xsphere.length; i++) {
       pushMatrix();
