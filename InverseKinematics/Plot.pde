@@ -7,10 +7,12 @@ class Plot {
   float[] Ysphere = new float[200];
   float[] Zsphere = new float[200];
 
+  //////////////////////////////////////////////////////////////////// Constructor
   Plot() {
     rectMode(CORNER);
   }
 
+  //////////////////////////////////////////////////////////////////// Update the Plot in the Graphical Canvas 
   void update() {
     lights();
     translate(width * 0.3, height / 2); 
@@ -49,6 +51,7 @@ class Plot {
     translate(-width * 0.3, -height / 2);
   }
 
+  //////////////////////////////////////////////////////////////////// Draw an Arrow
   void drawArrow(int cx, int cy, int len, float angle) {
     pushMatrix();
     strokeWeight(10);
@@ -60,6 +63,7 @@ class Plot {
     popMatrix();
   }
 
+  //////////////////////////////////////////////////////////////////// Draw a Coordinate Plane
   void plane() {
     strokeWeight(1);
     for (int y = -13; y < 13; y++) 
@@ -67,6 +71,7 @@ class Plot {
         rect(20 * x, 20 * y, 20, 20);
   }
 
+  //////////////////////////////////////////////////////////////////// Draw Every Point Saved in the History of the Plot
   void drawPoints(float posX, float posY, float posZ) {
 
     for (int i = 0; i< this.Xsphere.length - 1; i++) {
@@ -80,7 +85,7 @@ class Plot {
     this.Zsphere[this.Zsphere.length - 1] = posZ;
   }
 
-
+  //////////////////////////////////////////////////////////////////// Update Plot Rotation Angles
   void updateRot() {
     this.rotY -= (mouseX - pmouseX) * arm.dt;
     this.rotX -= (mouseY - pmouseY) * arm.dt;
