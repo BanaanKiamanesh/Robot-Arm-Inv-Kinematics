@@ -10,7 +10,7 @@ class Arm {
   float tmpX, tmpY, tmpZ;
 
   // Canvas and Link Rotation Params
-  float rotX, rotY;
+  float rotX = 0, rotY = 0;
   float alpha, beta, gamma;
 
   // Time Specs
@@ -32,6 +32,8 @@ class Arm {
   // Time Passed between rendered Frames
   double dt = 0; 
 
+  Plot plt;
+
   //////////////////////////////////////////////////////////////////// Constructor
   Arm() {
     // Import 3D Objects
@@ -51,18 +53,22 @@ class Arm {
     this.posY = this.tmpY;
     this.posZ = this.tmpZ;
 
-    println("Shapes Imported!");
+    this.plt = new Plot();
+
+    println("End Effector Position: X = ", posX, "Y = ", posY);
   }
 
   //////////////////////////////////////////////////////////////////// Update the Robot in the Graphical Canvas 
   void update() {
+
+    this.plt.update();
 
     this.pose();
     lights();
     directionalLight(51, 102, 126, -1, 0, 0);
 
     noStroke();
-    translate(width * 0.68, height/2);
+    translate(width * 0.7, height/2);
     rotateX(this.rotX);
     rotateY(-this.rotY);
     scale(-4);
@@ -78,6 +84,9 @@ class Arm {
     }
 
     this.dt = 1 / frameRate;
+    
+    // Print the Current End Effector Pos in the Terminal
+    println("End Effector Position: X = ", posX, "Y = ", posY);
   }
 
   //////////////////////////////////////////////////////////////////// Generate a Random Pos for the End Effector 
@@ -194,6 +203,8 @@ class Arm {
     this.Xsphere[this.Xsphere.length - 1] = this.posX;
     this.Ysphere[this.Ysphere.length - 1] = this.posY;
     this.Zsphere[this.Zsphere.length - 1] = this.posZ;
+
+    this.plt.drawPoints(posX, posY, posZ);
 
     for (int i = 0; i < this.Xsphere.length; i++) {
       pushMatrix();

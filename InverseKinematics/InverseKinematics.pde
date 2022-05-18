@@ -13,7 +13,14 @@ void draw() {
 
 // Canvas View Rotation Due to Mouse Drag
 void mouseDragged() {
-  arm.updateRot();
+  if (mouseX < width / 2)
+  {    
+    arm.plt.rotY -= (mouseX - pmouseX) * arm.dt;
+    arm.plt.rotX -= (mouseY - pmouseY) * arm.dt;
+  } else {
+    arm.rotY -= (mouseX - pmouseX) * arm.dt;
+    arm.rotX -= (mouseY - pmouseY) * arm.dt;
+  }
 }
 
 // Mode Indication
@@ -29,4 +36,11 @@ void keyPressed() {
 
   else if (key == 'i')
     arm.setMode("Inf");
+
+  else if (key == 'z') {
+    arm.rotX = 0;
+    arm.rotY = 0;
+    arm.rotX = 0;
+    arm.rotY = 0;
+  }
 }
