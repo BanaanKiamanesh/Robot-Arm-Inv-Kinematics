@@ -1,6 +1,6 @@
 class Plot {
 
-  float rotX = -PI/12, rotY = -PI/12;
+  float rotX = 0, rotY = 0;
 
   // Shape Path Effects Spheres
   float[] Xsphere = new float[200];
@@ -8,13 +8,14 @@ class Plot {
   float[] Zsphere = new float[200];
 
   Plot() {
-    rectMode(CENTER);
+    rectMode(CORNER);
   }
 
   void update() {
     lights();
     translate(width * 0.3, height / 2); 
 
+    pushMatrix();
     rotateY(this.rotY);
     rotateX(this.rotX);
 
@@ -29,29 +30,40 @@ class Plot {
     stroke(255, 150, 150, 80);
     fill(255, 15);
     this.plane();
+    this.drawArrow(-15 * 20, 0, 30 * 20, 0);
 
     stroke(150, 255, 150, 80);
     fill(255, 15);
     rotateX(HALF_PI);
     this.plane();
+    this.drawArrow(0, -15 * 20, 30 * 20, 90);
 
     stroke(150, 150, 255, 80);
     fill(255, 15);
     rotateY(HALF_PI);
     this.plane();
+    this.drawArrow(15 * 20, 0, 30 * 20, 180);
 
-    rotateY(-HALF_PI);
-    rotateX(-HALF_PI);
-
-    rotateX(-this.rotX);
-    rotateY(-this.rotY);
+    popMatrix();
 
     translate(-width * 0.3, -height / 2);
   }
 
+  void drawArrow(int cx, int cy, int len, float angle) {
+    pushMatrix();
+    strokeWeight(10);
+    translate(cx, cy);
+    rotate(radians(angle));
+    line(0, 0, len, 0);
+    line(len, 0, len - 20, -20);
+    line(len, 0, len - 20, 20);
+    popMatrix();
+  }
+
   void plane() {
-    for (int y = -12; y < 13; y++) 
-      for (int x = -12; x < 13; x++)
+    strokeWeight(1);
+    for (int y = -13; y < 13; y++) 
+      for (int x = -13; x < 13; x++)
         rect(20 * x, 20 * y, 20, 20);
   }
 
@@ -66,5 +78,11 @@ class Plot {
     this.Xsphere[this.Xsphere.length - 1] = posX;
     this.Ysphere[this.Ysphere.length - 1] = posY;
     this.Zsphere[this.Zsphere.length - 1] = posZ;
+  }
+
+
+  void updateRot() {
+    this.rotY -= (mouseX - pmouseX) * arm.dt;
+    this.rotX -= (mouseY - pmouseY) * arm.dt;
   }
 }

@@ -25,9 +25,9 @@ class Arm {
   String mode = "Rand";
 
   // Shape Path Effects Spheres
-  float[] Xsphere = new float[150];
-  float[] Ysphere = new float[150];
-  float[] Zsphere = new float[150];
+  float[] Xsphere = new float[100];
+  float[] Ysphere = new float[100];
+  float[] Zsphere = new float[100];
 
   // Time Passed between rendered Frames
   double dt = 0; 
@@ -78,13 +78,13 @@ class Arm {
     this.setPose(this.gamma, this.alpha, this.beta);
 
     if (this.mode != "Rand") {
-      this.tmpY = 50;
+      this.tmpY = 50;          // Draw End Effector Shapes in a Fixed Y 
       this.paramX = map(mouseX, 0, width, 5, 120);
       this.paramZ = map(mouseY, 0, height, 5, 120);
     }
 
-    this.dt = 1 / frameRate;
-    
+    this.dt = 1 / frameRate;  // Time Taken Between Each Frame
+
     // Print the Current End Effector Pos in the Terminal
     println("End Effector Position: X = ", posX, "Y = ", posY);
   }
@@ -164,7 +164,7 @@ class Arm {
     this.rotX -= (mouseY - pmouseY) * this.dt;
   }
 
-  //////////////////////////////////////////////////////////////////// Translate the Linkd to the Given Angles
+  //////////////////////////////////////////////////////////////////// Apply the Kinematics and Draw it on the Canvas!
   void setPose(float gamma, float alpha, float beta) {
 
     fill(#709AE0);
@@ -204,6 +204,7 @@ class Arm {
     this.Ysphere[this.Ysphere.length - 1] = this.posY;
     this.Zsphere[this.Zsphere.length - 1] = this.posZ;
 
+    // Add the New Point into the Plot
     this.plt.drawPoints(posX, posY, posZ);
 
     for (int i = 0; i < this.Xsphere.length; i++) {

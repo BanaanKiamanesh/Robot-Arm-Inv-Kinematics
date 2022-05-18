@@ -14,13 +14,9 @@ void draw() {
 // Canvas View Rotation Due to Mouse Drag
 void mouseDragged() {
   if (mouseX < width / 2)
-  {    
-    arm.plt.rotY -= (mouseX - pmouseX) * arm.dt;
-    arm.plt.rotX -= (mouseY - pmouseY) * arm.dt;
-  } else {
-    arm.rotY -= (mouseX - pmouseX) * arm.dt;
-    arm.rotX -= (mouseY - pmouseY) * arm.dt;
-  }
+    arm.plt.updateRot();
+
+  else arm.updateRot();
 }
 
 // Mode Indication
@@ -40,7 +36,7 @@ void keyPressed() {
   else if (key == 'z') {
     arm.rotX = 0;
     arm.rotY = 0;
-    arm.rotX = 0;
-    arm.rotY = 0;
+    arm.plt.rotX = 0;
+    arm.plt.rotY = 0;
   }
 }
